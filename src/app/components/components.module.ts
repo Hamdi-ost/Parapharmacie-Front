@@ -16,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ComponentsRoutingModule,
     ReactiveFormsModule
   ],
+  // tslint:disable-next-line:max-line-length
   declarations: [ButtonsComponent, GridsComponent, NotificationsComponent, IconsComponent, TypographyComponent, AlertsComponent, PanelsComponent]
 })
 export class ComponentsModule { }

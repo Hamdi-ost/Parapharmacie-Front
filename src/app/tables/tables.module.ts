@@ -18,6 +18,6 @@ const routes: Routes = [
     DataTablesModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [BasicComponent,SmartComponent]
+  declarations: [BasicComponent, SmartComponent]
 })
 export class TablesModule { }

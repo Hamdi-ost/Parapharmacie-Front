@@ -7,14 +7,11 @@ const routes: Routes = [
   {
     path: '', component: DashboardComponent,
     children: [
-      { path: '', component: DashboardHomeComponent },
-      { path: 'components', loadChildren: '../components/components.module#ComponentsModule' },
-      { path: 'forms', loadChildren: '../forms/forms.module#FormsLocalModule' },
-      { path: 'tables', loadChildren: '../tables/tables.module#TablesModule' },
-      { path: 'charts', loadChildren: '../charts/charts.module#ChartsModule' },
-      { path: 'maps', loadChildren: '../maps/maps.module#MapsModule' },
-      { path: 'editors', loadChildren: '../editors/editors.module#EditorsModule' },
-      { path: 'calendar', loadChildren: '../calendar/calendar.module#CalendarModule' }
+      { path: 'produits', loadChildren: '../produits/produit.module#ProduitModule' },
+      { path: 'categories', loadChildren: '../categories/categories.module#CategoriesModule' },
+      { path: 'interfaces', loadChildren: '../interfaces/interfaces.module#InterfacesModule' },
+      { path: 'users', loadChildren: '../users/user.module#UserModule' },
+
     ]
   }
 ];
