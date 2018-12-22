@@ -9,9 +9,11 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { TasksComponent } from './tasks/tasks.component';
 import { FormsModule } from '@angular/forms';
 import { StatsComponent } from './stats/stats.component';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 @NgModule({
   imports: [
+    FlashMessagesModule.forRoot(),
     CommonModule,
     FormsModule,
     DashboardRoutingModule

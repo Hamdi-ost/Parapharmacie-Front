@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class CategoriesComponent implements OnInit {
   dtOptions;
   data;
+  titre = 'Liste des categories';
   constructor() { }
 
   ngOnInit() {

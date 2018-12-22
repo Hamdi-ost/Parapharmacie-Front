@@ -1,13 +1,11 @@
-<h2 class="heading text-center">Smart Table</h2>
+<h2 class="heading text-center">{{titre}}</h2>
 
-<h5 class="mt-4">Smart Table</h5>
+<h5 class="mt-4"></h5>
 <div class="card">
   <div class="card-body">
-      <table id="data_table"  datatable [dtOptions]="dtOptions" class="display table responsive no-wrap"></table>
+      <table id="data_table"   dt-instance="dtInstanceCallback" datatable [dtOptions]="dtOptions" class="display table responsive no-wrap"></table>
   </div>
 </div>
-<p class="d-block text-right text-muted"> for more info:
-  <a href="http://l-lin.github.io/angular-datatables/" target="_blank">Angular Datatables
-    <i class="material-icons" style="font-size: .9rem">launch</i>
-  </a>
+<p class="d-block text-right text-muted">
 </p>
+

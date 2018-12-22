@@ -6,13 +6,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataTablesModule } from 'angular-datatables';
 import { ProduitModule } from 'app/produits/produit.module';
 import { UserModule } from 'app/users/user.module';
+import { HttpClientModule } from '@angular/common/http';
+import { Routes } from '@angular/router';
 
+const routes: Routes = [
+
+];
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,

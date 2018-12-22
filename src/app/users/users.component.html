@@ -1,1 +1,116 @@
-<app-smart [dtOptions]="dtOptions" [data]="data"></app-smart>
+<app-smart [titre]="titre" [dtOptions]="dtOptions" [data]="data"></app-smart>
+
+<div style="padding-bottom: 3rem">
+  <button
+    style="float:right"
+    _ngcontent-c21=""
+    data-toggle="modal"
+    data-target="#exampleModal"
+    class="btn w-25 m-3 btn-primary"
+    type="button"
+  >
+    Create New
+  </button>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create New</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div _ngcontent-c9="" class="col-xl">
+          <h4 _ngcontent-c9="">User</h4>
+          <div _ngcontent-c9="" class="card">
+            <div _ngcontent-c9="" class="card-body">
+              <form
+                _ngcontent-c9=""
+                class="mb-xl-4 ng-untouched ng-pristine ng-valid"
+                novalidate=""
+              >
+                <div _ngcontent-c9="" class="form-group row">
+                  <label _ngcontent-c9="" class="col-sm-3 col-form-label"
+                    >Email</label
+                  >
+                  <div _ngcontent-c9="" class="col-sm-9">
+                    <input
+                      name="email"
+                      [(ngModel)]="email"
+                      _ngcontent-c9=""
+                      class="form-control"
+                      placeholder="Enter Email"
+                      type="email"
+                    />
+                  </div>
+                </div>
+                <div _ngcontent-c9="" class="form-group row">
+                  <label _ngcontent-c9="" class="col-sm-3 col-form-label"
+                    >Name</label
+                  >
+                  <div _ngcontent-c9="" class="col-sm-9">
+                    <input
+                      name="name"
+                      [(ngModel)]="name"
+                      _ngcontent-c9=""
+                      class="form-control"
+                      placeholder="Enter username"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div _ngcontent-c9="" class="form-group row">
+                  <label _ngcontent-c9="" class="col-sm-3 col-form-label"
+                    >Password</label
+                  >
+                  <div _ngcontent-c9="" class="col-sm-9">
+                    <input
+                      name="password"
+                      [(ngModel)]="password"
+                      _ngcontent-c9=""
+                      class="form-control"
+                      placeholder="Password"
+                      type="password"
+                    />
+                  </div>
+                </div>
+                <div _ngcontent-c9="" class="form-group row">
+                  <div _ngcontent-c9="" class="col-sm-9 offset-sm-3">
+                    <div
+                      _ngcontent-c9=""
+                      class="custom-control custom-checkbox"
+                    ></div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" (click)="addUser()" class="btn btn-primary">
+          Ajouter
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
