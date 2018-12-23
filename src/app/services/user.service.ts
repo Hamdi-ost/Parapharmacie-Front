@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
-const apiUrl = 'http://localhost:3000/api/users ';
+const apiUrl = 'http://localhost:3000/api/users';
 
 @Injectable({
   providedIn: 'root'
@@ -54,8 +54,8 @@ export class UserService {
     );
   }
 
-  updateUser(data): Observable<any> {
-    return this.http.put(apiUrl, data, httpOptions)
+  updateUser(data, id): Observable<any> {
+    return this.http.put(`${apiUrl}/${id}`, data, httpOptions)
       .pipe(
         catchError(this.handleError)
       );

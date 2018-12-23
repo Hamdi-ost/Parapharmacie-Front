@@ -1,8 +1,31 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Routes } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ViewChild,
+  AfterViewInit,
+  Renderer2,
+  OnDestroy,
+  Renderer,
+  ɵConsole
+} from '@angular/core';
+import { Routes, Router } from '@angular/router';
 import { UserService } from 'app/services/user.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { Logs } from 'selenium-webdriver';
+
 declare var jQuery: any;
+
+class DataTablesResponse {
+  data: any[];
+  draw: number;
+  recordsFiltered: number;
+  recordsTotal: number;
+}
+
 @Component({
   selector: 'app-users',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -11,43 +34,77 @@ declare var jQuery: any;
 })
 export class UsersComponent implements OnInit {
   dtOptions: any;
-  users = [['Hamdi', 'hamdi@yahoo.fr', 'admin']];
+  users;
+  dtTrigger = new Subject();
   titre = 'Liste des utilisateurs';
-
   email;
   password;
   name;
+  userId;
 
   constructor(
+    private http: HttpClient,
     private userSerice: UserService,
-    private _flashMessagesService: FlashMessagesService
-  ) {
-    let user = [];
+    private _flashMessagesService: FlashMessagesService,
+    private renderer: Renderer,
+    private router: Router
+  ) {}
+
+  fetchData() {
     this.userSerice.getUsers().subscribe(data => {
-      user = data;
-      user.forEach(element => {
-        this.users.push([element.username, element.email, 'admin']);
-      });
+      this.users = data.reverse();
     });
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.fetchData();
     this.dtOptions = {
-      data: this.users,
-      columns: [
-        { title: 'Nom' },
-        { title: 'Email' },
-        { title: 'Role' },
-        {
-          title: 'Action',
-          render: (data: any, type: any, full: any) => {
-            // tslint:disable-next-line:max-line-length
-            return '<button ng-click="deleteUser()" class="btn  btn-just-icon btn-round btn-light"><i class="material-icons">details</i></button><button class="btn  btn-just-icon btn-round btn-light"><i class="material-icons">edit</i></button><button class="btn  btn-just-icon btn-round btn-light"><i class="material-icons">delete</i></button>';
-          }
-        }
-      ]
+      pagingType: 'full_numbers',
+      pageLength: 2
     };
   }
+
+  deleteUser(id) {
+    this.userSerice.deleteUser(id).subscribe(data => {
+      this._flashMessagesService.show('Utilisateur supprimé!', {
+        cssClass: 'alert-success',
+        timeout: 2500
+      });
+    }, () => {}, () => {   this.fetchData(); });
+  }
+
+  getUser(id) {
+    this.userId = id;
+    this.userSerice.getUser(id).subscribe(user => {
+      this.name = user.username;
+      this.email = user.email;
+      jQuery('#editModal').modal('show');
+    });
+  }
+
+  detailsUser(id) {
+    this.userId = id;
+    this.userSerice.getUser(id).subscribe(user => {
+      this.name = user.username;
+      this.email = user.email;
+      jQuery('#detailsModal').modal('show');
+    });
+  }
+    updateUser() {
+      const UpdatedUser = {
+        username: this.name,
+        password: this.password,
+        email: this.email
+      };
+      this.userSerice.updateUser(UpdatedUser, this.userId).subscribe(data => {
+        jQuery('#editModal').modal('hide');
+        this.fetchData();
+        this._flashMessagesService.show('Utilisateur Updated!', {
+          cssClass: 'alert-success',
+          timeout: 2500
+        });
+      });
+    }
 
   addUser() {
     const user = {
@@ -56,13 +113,9 @@ export class UsersComponent implements OnInit {
       email: this.email
     };
     this.userSerice.postUser(user).subscribe(data => {
+      console.log(data);
       if (data.msg === 'existe') {
         this._flashMessagesService.show('Utilisateur existe déja!', {
-          cssClass: 'alert-danger',
-          timeout: 2500
-        });
-      } else if ((data.msg = 'null')) {
-        this._flashMessagesService.show('Remplir tous les champs svp!', {
           cssClass: 'alert-danger',
           timeout: 2500
         });
@@ -73,11 +126,7 @@ export class UsersComponent implements OnInit {
         });
       }
       jQuery('#exampleModal').modal('hide');
+      this.fetchData();
     });
-  }
-
-  deleteUser() {
-    console.log('behy');
-    // this.userSerice.deleteUser(id).subscribe();
   }
 }

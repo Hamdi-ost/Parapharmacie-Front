@@ -1,4 +1,12 @@
-<app-smart [titre]="titre" [dtOptions]="dtOptions" [data]="data"></app-smart>
+<app-smart
+  (delete)="deleteUser($event)"
+  (edit)="getUser($event)"
+  (details)="detailsUser($event)"
+  [users]="users"
+  [titre]="titre"
+  [dtOptions]="dtOptions"
+  [data]="data"
+></app-smart>
 
 <div style="padding-bottom: 3rem">
   <button
@@ -13,7 +21,7 @@
   </button>
 </div>
 
-<!-- Modal -->
+<!-- Create Modal -->
 <div
   class="modal fade"
   id="exampleModal"
@@ -109,6 +117,153 @@
         </button>
         <button type="button" (click)="addUser()" class="btn btn-primary">
           Ajouter
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div
+  class="modal fade"
+  id="editModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div _ngcontent-c9="" class="col-xl">
+          <h4 _ngcontent-c9="">User</h4>
+          <div _ngcontent-c9="" class="card">
+            <div _ngcontent-c9="" class="card-body">
+              <form
+                _ngcontent-c9=""
+                class="mb-xl-4 ng-untouched ng-pristine ng-valid"
+                novalidate=""
+              >
+                <div _ngcontent-c9="" class="form-group row">
+                  <label _ngcontent-c9="" class="col-sm-3 col-form-label"
+                    >Email</label
+                  >
+                  <div _ngcontent-c9="" class="col-sm-9">
+                    <input
+                      name="email"
+                      [(ngModel)]="email"
+                      _ngcontent-c9=""
+                      class="form-control"
+                      placeholder="Enter Email"
+                      type="email"
+                    />
+                  </div>
+                </div>
+                <div _ngcontent-c9="" class="form-group row">
+                  <label _ngcontent-c9="" class="col-sm-3 col-form-label"
+                    >Name</label
+                  >
+                  <div _ngcontent-c9="" class="col-sm-9">
+                    <input
+                      name="name"
+                      [(ngModel)]="name"
+                      _ngcontent-c9=""
+                      class="form-control"
+                      placeholder="Enter username"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div _ngcontent-c9="" class="form-group row">
+                  <label _ngcontent-c9="" class="col-sm-3 col-form-label"
+                    >Password</label
+                  >
+                  <div _ngcontent-c9="" class="col-sm-9">
+                    <input
+                      name="password"
+                      [(ngModel)]="password"
+                      _ngcontent-c9=""
+                      class="form-control"
+                      placeholder="Password"
+                      type="password"
+                    />
+                  </div>
+                </div>
+                <div _ngcontent-c9="" class="form-group row">
+                  <div _ngcontent-c9="" class="col-sm-9 offset-sm-3">
+                    <div
+                      _ngcontent-c9=""
+                      class="custom-control custom-checkbox"
+                    ></div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" (click)="updateUser()" class="btn btn-primary">
+          Modifier
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div
+  class="modal fade"
+  id="detailsModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Details</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div _ngcontent-c10="" class="card">
+          <div _ngcontent-c10="" class="card-body">
+            <dl _ngcontent-c10="" class="row">
+              <dt _ngcontent-c10="" class="col-sm-3">ID</dt>
+              <dd _ngcontent-c10="" class="col-sm-9">{{ userId }}</dd>
+              <dt _ngcontent-c10="" class="col-sm-3">NAME</dt>
+              <dd _ngcontent-c10="" class="col-sm-9">{{ name }}</dd>
+              <dt _ngcontent-c10="" class="col-sm-3">EMAIL</dt>
+              <dd _ngcontent-c10="" class="col-sm-9">{{ email }}</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
         </button>
       </div>
     </div>

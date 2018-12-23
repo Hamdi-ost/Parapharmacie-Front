@@ -1,11 +1,39 @@
-<h2 class="heading text-center">{{titre}}</h2>
+<h2 class="heading text-center">{{ titre }}</h2>
 
 <h5 class="mt-4"></h5>
 <div class="card">
   <div class="card-body">
-      <table id="data_table"   dt-instance="dtInstanceCallback" datatable [dtOptions]="dtOptions" class="display table responsive no-wrap"></table>
+    <table
+      id="data_table"
+      datatable
+      [dtOptions]="dtOptions"
+      class="display table responsive no-wrap"
+    >
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user._id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <button (click)="detailsX(user._id)" class="btn btn-just-icon btn-round btn-light">
+              <i class="material-icons">details</i></button
+            ><button (click)="editX(user._id)" class="btn  btn-just-icon btn-round btn-light">
+              <i class="material-icons">edit</i></button
+            ><button (click)="deleteX(user._id)" class="btn  btn-just-icon btn-round btn-light">
+              <i class="material-icons">delete</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
-<p class="d-block text-right text-muted">
-</p>
-
+<p class="d-block text-right text-muted"></p>
