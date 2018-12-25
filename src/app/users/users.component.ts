@@ -1,30 +1,8 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ViewChild,
-  AfterViewInit,
-  Renderer2,
-  OnDestroy,
-  Renderer,
-  ɵConsole
-} from '@angular/core';
-import { Routes, Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { UserService } from 'app/services/user.service';
 import { FlashMessagesService } from 'angular2-flash-messages';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import { Logs } from 'selenium-webdriver';
 
 declare var jQuery: any;
-
-class DataTablesResponse {
-  data: any[];
-  draw: number;
-  recordsFiltered: number;
-  recordsTotal: number;
-}
 
 @Component({
   selector: 'app-users',
@@ -35,24 +13,25 @@ class DataTablesResponse {
 export class UsersComponent implements OnInit {
   dtOptions: any;
   users;
-  dtTrigger = new Subject();
   titre = 'Liste des utilisateurs';
   email;
   password;
   name;
   userId;
+  columnsName;
 
   constructor(
-    private http: HttpClient,
     private userSerice: UserService,
-    private _flashMessagesService: FlashMessagesService,
-    private renderer: Renderer,
-    private router: Router
+    private _flashMessagesService: FlashMessagesService
   ) {}
 
   fetchData() {
     this.userSerice.getUsers().subscribe(data => {
       this.users = data.reverse();
+      this.columnsName = Object.keys(this.users[0]);
+      this.columnsName.pop();
+      this.columnsName.push('Action');
+      this.columnsName.splice(2, 1);
     });
   }
 
@@ -65,12 +44,18 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(id) {
-    this.userSerice.deleteUser(id).subscribe(data => {
-      this._flashMessagesService.show('Utilisateur supprimé!', {
-        cssClass: 'alert-success',
-        timeout: 2500
-      });
-    }, () => {}, () => {   this.fetchData(); });
+    this.userSerice.deleteUser(id).subscribe(
+      data => {
+        this._flashMessagesService.show('Utilisateur supprimé!', {
+          cssClass: 'alert-success',
+          timeout: 2500
+        });
+      },
+      () => {},
+      () => {
+        this.fetchData();
+      }
+    );
   }
 
   getUser(id) {
@@ -90,21 +75,21 @@ export class UsersComponent implements OnInit {
       jQuery('#detailsModal').modal('show');
     });
   }
-    updateUser() {
-      const UpdatedUser = {
-        username: this.name,
-        password: this.password,
-        email: this.email
-      };
-      this.userSerice.updateUser(UpdatedUser, this.userId).subscribe(data => {
-        jQuery('#editModal').modal('hide');
-        this.fetchData();
-        this._flashMessagesService.show('Utilisateur Updated!', {
-          cssClass: 'alert-success',
-          timeout: 2500
-        });
+  updateUser() {
+    const UpdatedUser = {
+      username: this.name,
+      password: this.password,
+      email: this.email
+    };
+    this.userSerice.updateUser(UpdatedUser, this.userId).subscribe(data => {
+      jQuery('#editModal').modal('hide');
+      this.fetchData();
+      this._flashMessagesService.show('Utilisateur Updated!', {
+        cssClass: 'alert-success',
+        timeout: 2500
       });
-    }
+    });
+  }
 
   addUser() {
     const user = {

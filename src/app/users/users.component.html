@@ -2,10 +2,10 @@
   (delete)="deleteUser($event)"
   (edit)="getUser($event)"
   (details)="detailsUser($event)"
-  [users]="users"
   [titre]="titre"
   [dtOptions]="dtOptions"
-  [data]="data"
+  [data]="users"
+  [columnsName]="columnsName"
 ></app-smart>
 
 <div style="padding-bottom: 3rem">
@@ -17,7 +17,7 @@
     class="btn w-25 m-3 btn-primary"
     type="button"
   >
-    Create New
+  Créer un nouveau
   </button>
 </div>
 
@@ -33,7 +33,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create New</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Créer un nouveau</h5>
         <button
           type="button"
           class="close"
@@ -96,14 +96,6 @@
                       placeholder="Password"
                       type="password"
                     />
-                  </div>
-                </div>
-                <div _ngcontent-c9="" class="form-group row">
-                  <div _ngcontent-c9="" class="col-sm-9 offset-sm-3">
-                    <div
-                      _ngcontent-c9=""
-                      class="custom-control custom-checkbox"
-                    ></div>
                   </div>
                 </div>
               </form>

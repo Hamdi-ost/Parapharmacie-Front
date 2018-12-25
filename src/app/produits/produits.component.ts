@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { FlashMessagesService } from 'angular2-flash-messages';
+import { ProduitsService } from 'app/services/produits.service';
+declare var jQuery: any;
 
 @Component({
   selector: 'app-produits',
@@ -6,32 +9,116 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./produits.component.scss']
 })
 export class ProduitsComponent implements OnInit {
-  dtOptions;
-  data = [
-    ['Tiger Nixon', 'System Architect', 'Edinburgh', '5421', '2011/04/25', '$320,800']
-  ];
-  titre = 'Liste des produits';
+  dtOptions: any;
+  products;
+  titre = 'Liste des Produits';
+  description;
+  cost;
+  name;
+  picturePath;
+  productId;
+  columnsName;
 
-  constructor() { }
+  constructor(
+    private productService: ProduitsService,
+    private _flashMessagesService: FlashMessagesService
+  ) {}
 
-  ngOnInit() {
+  fetchData() {
+    this.productService.getProducts().subscribe(data => {
+      this.products = data.reverse();
+      this.columnsName = Object.keys(this.products[0]);
+      this.columnsName.pop();
+      this.columnsName.push('Action');
+    });
+  }
+
+  ngOnInit(): void {
+    this.fetchData();
     this.dtOptions = {
-      data: this.data,
-      columns: [
-        { title: 'Nom' },
-        { title: 'Categorie' },
-        { title: 'En promotion' },
-        { title: 'Disponible' },
-        { title: 'Quantité' },
-        { title: 'Prix' },
-        {
-          title: 'action', render: (data: any, type: any, full: any) => {
-            // tslint:disable-next-line:max-line-length
-            return '<button class="btn  btn-just-icon btn-round btn-light"><i class="material-icons">details</i></button><button class="btn  btn-just-icon btn-round btn-light"><i class="material-icons">edit</i></button><button class="btn  btn-just-icon btn-round btn-light"><i class="material-icons">delete</i></button>';
-          }
-        }
-      ]
+      pagingType: 'full_numbers',
+      pageLength: 2
     };
   }
 
+  deleteProduct(id) {
+    this.productService.deleteProduct(id).subscribe(
+      data => {
+        this._flashMessagesService.show('Produit supprimé!', {
+          cssClass: 'alert-success',
+          timeout: 2500
+        });
+      },
+      () => {},
+      () => {
+        this.fetchData();
+      }
+    );
+  }
+
+  getProduct(id) {
+    this.productId = id;
+    this.productService.getProduct(id).subscribe(Product => {
+      this.name = Product.name;
+      this.description = Product.description;
+      this.cost = Product.cost;
+      jQuery('#editModal').modal('show');
+    });
+  }
+
+  detailsProduct(id) {
+    this.productId = id;
+    this.productService.getProduct(id).subscribe(Product => {
+      this.name = Product.name;
+      this.description = Product.description;
+      this.cost = Product.cost;
+      this.picturePath = Product.picturePath;
+      jQuery('#detailsModal').modal('show');
+    });
+  }
+
+  updateProduct() {
+    const UpdatedProduct = {
+      name: this.name,
+      cost: this.cost,
+      description: this.description,
+      picturePath: '/path'
+    };
+    this.productService
+      .updateProduct(UpdatedProduct, this.productId)
+      .subscribe(data => {
+        console.log(data);
+        jQuery('#editModal').modal('hide');
+        this.fetchData();
+        this._flashMessagesService.show('Produit Updated!', {
+          cssClass: 'alert-success',
+          timeout: 2500
+        });
+      });
+  }
+
+  addProduct() {
+    const Product = {
+      name: this.name,
+      cost: this.cost,
+      description: this.description,
+      picturePath: '/path'
+    };
+    this.productService.postProduct(Product).subscribe(data => {
+      console.log(data);
+      if (data.msg === 'existe') {
+        this._flashMessagesService.show('Produit existe déja!', {
+          cssClass: 'alert-danger',
+          timeout: 2500
+        });
+      } else {
+        this._flashMessagesService.show('Produit créé!', {
+          cssClass: 'alert-success',
+          timeout: 2500
+        });
+      }
+      jQuery('#exampleModal').modal('hide');
+      this.fetchData();
+    });
+  }
 }

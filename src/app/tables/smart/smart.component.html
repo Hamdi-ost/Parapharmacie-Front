@@ -11,23 +11,20 @@
     >
       <thead>
         <tr>
-          <th>ID</th>
-          <th>Username</th>
-          <th>Email</th>
-          <th>Action</th>
+          <th *ngFor="let column of columnsName">{{column | uppercase}}</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let user of users">
-          <td>{{ user._id }}</td>
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
+        <tr *ngFor="let obj of data">
+         <ng-container *ngFor="let column of columnsName">
+          <td *ngIf="column !== 'Action'" >{{ obj[column] }}</td>
+         </ng-container>
           <td>
-            <button (click)="detailsX(user._id)" class="btn btn-just-icon btn-round btn-light">
+            <button (click)="detailsX(obj._id)" class="btn btn-just-icon btn-round btn-light">
               <i class="material-icons">details</i></button
-            ><button (click)="editX(user._id)" class="btn  btn-just-icon btn-round btn-light">
+            ><button (click)="editX(obj._id)" class="btn  btn-just-icon btn-round btn-light">
               <i class="material-icons">edit</i></button
-            ><button (click)="deleteX(user._id)" class="btn  btn-just-icon btn-round btn-light">
+            ><button (click)="deleteX(obj._id)" class="btn  btn-just-icon btn-round btn-light">
               <i class="material-icons">delete</i>
             </button>
           </td>

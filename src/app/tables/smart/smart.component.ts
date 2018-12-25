@@ -24,9 +24,8 @@ export class SmartComponent implements OnInit {
   @Input() dtOptions: DataTables.Settings = {};
   @Input() dtTrigger = new Subject();
   @Input() data;
-  @Input() users;
-
-  constructor(private renderer: Renderer2) {}
+  @Input() columnsName;
+  constructor() {}
 
   ngOnInit() {}
 
