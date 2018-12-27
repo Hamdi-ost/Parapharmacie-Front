@@ -35,8 +35,8 @@ export class DashboardComponent implements OnInit, AfterViewChecked {
           NProgress.remove();
         }, 500);
       } else if (obj instanceof NavigationEnd) {
-        this.cmnSrv.dashboardState.navbarToggle = false;
-        this.cmnSrv.dashboardState.sidebarToggle = true;
+         this.cmnSrv.dashboardState.navbarToggle = false;
+         this.cmnSrv.dashboardState.sidebarToggle = true;
         window.scrollTo(0, 0);
       }
     });

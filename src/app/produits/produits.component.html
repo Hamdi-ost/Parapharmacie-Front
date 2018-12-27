@@ -85,6 +85,18 @@
                 </div>
                 <div _ngcontent-c9="" class="form-group row">
                   <label _ngcontent-c9="" class="col-sm-3 col-form-label"
+                    >Category</label
+                  >
+                  <div _ngcontent-c9="" class="col-sm-9">
+                    <select _ngcontent-c17="" class="custom-select mb-3"
+                      ><option *ngFor="let category of categories" _ngcontent-c17="" selected=""
+                        >{{category}}</option
+                      ></select
+                    >
+                  </div>
+                </div>
+                <div _ngcontent-c9="" class="form-group row">
+                  <label _ngcontent-c9="" class="col-sm-3 col-form-label"
                     >Description</label
                   >
                   <div _ngcontent-c9="" class="col-sm-9">
@@ -98,15 +110,15 @@
                     ></textarea>
                   </div>
                 </div>
-                  <div _ngcontent-c16="" class="custom-file mb-3">
-                    <input
-                      _ngcontent-c16=""
-                      class="custom-file-input"
-                      type="file"
-                    /><label _ngcontent-c16="" class="custom-file-label"
-                      >Choisir photo</label
-                    >
-                  </div>
+                <div _ngcontent-c16="" class="custom-file mb-3">
+                  <input
+                    _ngcontent-c16=""
+                    class="custom-file-input"
+                    type="file"
+                  /><label _ngcontent-c16="" class="custom-file-label"
+                    >Choisir photo</label
+                  >
+                </div>
               </form>
             </div>
           </div>
@@ -202,14 +214,14 @@
                   </div>
                 </div>
                 <div _ngcontent-c16="" class="custom-file mb-3">
-                        <input
-                          _ngcontent-c16=""
-                          class="custom-file-input"
-                          type="file"
-                        /><label _ngcontent-c16="" class="custom-file-label"
-                          >Choisir photo</label
-                        >
-                      </div>
+                  <input
+                    _ngcontent-c16=""
+                    class="custom-file-input"
+                    type="file"
+                  /><label _ngcontent-c16="" class="custom-file-label"
+                    >Choisir photo</label
+                  >
+                </div>
               </form>
             </div>
           </div>

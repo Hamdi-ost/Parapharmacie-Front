@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { ProduitsService } from 'app/services/produits.service';
+import { CategoryService } from 'app/services/category.service';
 declare var jQuery: any;
 
 @Component({
@@ -18,11 +19,19 @@ export class ProduitsComponent implements OnInit {
   picturePath;
   productId;
   columnsName;
+  categories = [];
 
   constructor(
     private productService: ProduitsService,
+    private categoryService: CategoryService,
     private _flashMessagesService: FlashMessagesService
-  ) {}
+  ) {
+    this.categoryService.getCategories().subscribe(cat => {
+      this.categories = cat.map(res => {
+        return res['name'];
+      });
+    });
+  }
 
   fetchData() {
     this.productService.getProducts().subscribe(data => {
@@ -68,13 +77,16 @@ export class ProduitsComponent implements OnInit {
 
   detailsProduct(id) {
     this.productId = id;
+    this.categoryService.getCategories().subscribe(cat => {
     this.productService.getProduct(id).subscribe(Product => {
       this.name = Product.name;
       this.description = Product.description;
       this.cost = Product.cost;
       this.picturePath = Product.picturePath;
+      console.log(cat);
       jQuery('#detailsModal').modal('show');
     });
+  });
   }
 
   updateProduct() {
@@ -119,6 +131,6 @@ export class ProduitsComponent implements OnInit {
       }
       jQuery('#exampleModal').modal('hide');
       this.fetchData();
-    });
+  });
   }
 }

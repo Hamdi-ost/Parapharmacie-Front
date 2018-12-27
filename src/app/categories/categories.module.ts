@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { CategoriesComponent } from './categories.component';
 import { SharedModuleModule } from 'app/shared-module/shared-module.module';
+import { FormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedModuleModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    FormsModule
   ],
   declarations: [CategoriesComponent]
 })
