@@ -72,7 +72,7 @@ export class CategoriesComponent implements OnInit {
     this.categoryId = id;
     this.productService.getProducts().subscribe(prod => {
     this.categoryService.getCategory(id).subscribe(Category => {
-      console.log(prod);
+      this.products = prod;
       this.name = Category.name;
       this.description = Category.description;
       jQuery('#detailsModal').modal('show');
@@ -84,7 +84,6 @@ export class CategoriesComponent implements OnInit {
     const UpdatedCategory = {
       name: this.name,
       description: this.description,
-      products: this.products
     };
     this.categoryService
       .updateCategory(UpdatedCategory, this.categoryId)
@@ -103,7 +102,6 @@ export class CategoriesComponent implements OnInit {
     const Category = {
       name: this.name,
       description: this.description,
-      products: this.products
     };
     this.categoryService.postCategory(Category).subscribe(data => {
       console.log(data);

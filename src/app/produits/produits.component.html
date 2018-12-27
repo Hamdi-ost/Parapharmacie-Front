@@ -88,9 +88,9 @@
                     >Category</label
                   >
                   <div _ngcontent-c9="" class="col-sm-9">
-                    <select _ngcontent-c17="" class="custom-select mb-3"
-                      ><option *ngFor="let category of categories" _ngcontent-c17="" selected=""
-                        >{{category}}</option
+                    <select [(ngModel)]="categoryId" _ngcontent-c17="" class="custom-select mb-3" name="categoryId"
+                      ><option *ngFor="let category of categories" _ngcontent-c17="" selected="" value={{category._id}}
+                        >{{category.name}}</option
                       ></select
                     >
                   </div>
@@ -270,6 +270,8 @@
               <dt _ngcontent-c10="" class="col-sm-3">Photo</dt>
               <dd _ngcontent-c10="" class="col-sm-9">{{ picturePath }}</dd>
               <dt _ngcontent-c10="" class="col-sm-3">Nom</dt>
+              <dd _ngcontent-c10="" class="col-sm-9">{{ name }}</dd>
+              <dt _ngcontent-c10="" class="col-sm-3">Category</dt>
               <dd _ngcontent-c10="" class="col-sm-9">{{ name }}</dd>
               <dt _ngcontent-c10="" class="col-sm-3">Prix</dt>
               <dd _ngcontent-c10="" class="col-sm-9">{{ cost }} DT</dd>

@@ -2,6 +2,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { CategoryService } from './category.service';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -13,7 +14,7 @@ const apiUrl = 'http://localhost:3000/api/products';
 })
 export class ProduitsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private categoryService: CategoryService) { }
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -67,6 +68,13 @@ export class ProduitsService {
       .pipe(
         catchError(this.handleError)
       );
+  }
+
+  getCategoryName(id) {
+    this.categoryService.getCategory(id).subscribe(res => {
+      console.log(res.name);
+      return res.name;
+    });
   }
 
 

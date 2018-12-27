@@ -19,27 +19,26 @@ export class ProduitsComponent implements OnInit {
   picturePath;
   productId;
   columnsName;
-  categories = [];
+  categories;
+  categoryId;
+  categoryName;
 
   constructor(
     private productService: ProduitsService,
     private categoryService: CategoryService,
     private _flashMessagesService: FlashMessagesService
-  ) {
-    this.categoryService.getCategories().subscribe(cat => {
-      this.categories = cat.map(res => {
-        return res['name'];
-      });
-    });
-  }
+  ) {}
 
   fetchData() {
+    this.categoryService.getCategories().subscribe(cat => {
     this.productService.getProducts().subscribe(data => {
+      this.categories = cat;
       this.products = data.reverse();
       this.columnsName = Object.keys(this.products[0]);
       this.columnsName.pop();
       this.columnsName.push('Action');
     });
+  });
   }
 
   ngOnInit(): void {
@@ -77,22 +76,23 @@ export class ProduitsComponent implements OnInit {
 
   detailsProduct(id) {
     this.productId = id;
-    this.categoryService.getCategories().subscribe(cat => {
+    let cat;
     this.productService.getProduct(id).subscribe(Product => {
+      cat = Product.category;
       this.name = Product.name;
       this.description = Product.description;
       this.cost = Product.cost;
       this.picturePath = Product.picturePath;
-      console.log(cat);
+      });
+      console.log(this.productService.getCategoryName(cat));
       jQuery('#detailsModal').modal('show');
-    });
-  });
   }
 
   updateProduct() {
     const UpdatedProduct = {
       name: this.name,
       cost: this.cost,
+      category: this.categoryId,
       description: this.description,
       picturePath: '/path'
     };
@@ -113,9 +113,11 @@ export class ProduitsComponent implements OnInit {
     const Product = {
       name: this.name,
       cost: this.cost,
+      category: this.categoryId,
       description: this.description,
       picturePath: '/path'
     };
+    console.log(Product);
     this.productService.postProduct(Product).subscribe(data => {
       console.log(data);
       if (data.msg === 'existe') {
