@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AppServiceService } from 'app/services/app-service.service';
+import { Router } from '@angular/router';
+import { TokenService } from 'app/services/token.service';
+import { LoginSignupService } from 'app/services/login-signup.service';
 
 @Component({
   selector: 'app-auth',
@@ -8,10 +12,13 @@ import { Component, OnInit } from '@angular/core';
 export class AuthComponent implements OnInit {
 
   toggleFormClass;
+  public form = {
+    username : null,
+    password : null
+  };
 
-  constructor() { }
+  public error = [];
 
-  ngOnInit() { }
 
   showSignUp() {
     this.toggleFormClass = 'bounceLeft';
@@ -19,6 +26,38 @@ export class AuthComponent implements OnInit {
 
   showLogin() {
     this.toggleFormClass = 'bounceRight';
+  }
+
+
+
+  constructor(private loginRegisterService: LoginSignupService,
+    private tokenService: TokenService,
+  private router: Router,
+  private authService: AppServiceService) { }
+
+  ngOnInit() {
+  }
+
+  login() {
+    this.loginRegisterService.login(this.form);
+  }
+
+  signUp() {
+    this.loginRegisterService.signup(this.form).subscribe(
+      data => this.handleResponse(data),
+      error => {
+        this.handleError(error);
+      });
+  }
+
+  handleError(error) {
+    this.error = error.errors;
+  }
+
+  handleResponse(data) {
+    this.tokenService.handle(data.access_token);
+    this.authService.changeAuthStatus(true);
+    this.router.navigateByUrl('/dashboard');
   }
 
 }

@@ -8,15 +8,13 @@ import { ProduitModule } from 'app/produits/produit.module';
 import { UserModule } from 'app/users/user.module';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
-const routes: Routes = [
-
-];
 
 @NgModule({
   declarations: [
     AppComponent
-  ],
+    ],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -24,7 +22,8 @@ const routes: Routes = [
     AppRoutingModule,
     DataTablesModule,
     UserModule,
-    ProduitModule
+    ProduitModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -29,9 +29,7 @@ export class UsersComponent implements OnInit {
     this.userSerice.getUsers().subscribe(data => {
       this.users = data.reverse();
       this.columnsName = Object.keys(this.users[0]);
-      this.columnsName.pop();
       this.columnsName.push('Action');
-      this.columnsName.splice(2, 1);
     });
   }
 

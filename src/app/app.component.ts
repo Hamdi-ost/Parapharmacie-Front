@@ -5,5 +5,9 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
+  pathname;
 
+  constructor() {
+    this.pathname = window.location.pathname;
+  }
 }

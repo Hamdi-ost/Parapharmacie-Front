@@ -30,8 +30,6 @@ export class CategoriesComponent implements OnInit {
     this.categoryService.getCategories().subscribe(data => {
       this.categories = data.reverse();
       this.columnsName = Object.keys(this.categories[0]);
-      this.columnsName.pop();
-      this.columnsName.shift();
       this.columnsName.push('Action');
     });
   }
@@ -71,13 +69,25 @@ export class CategoriesComponent implements OnInit {
   detailsCategory(id) {
     this.categoryId = id;
     this.productService.getProducts().subscribe(prod => {
-    this.categoryService.getCategory(id).subscribe(Category => {
-      this.products = prod;
-      this.name = Category.name;
-      this.description = Category.description;
+    this.categoryService.getCategory(id).subscribe(category => {
+      this.products = this.productList(prod, category);
+      this.name = category.name;
+      this.description = category.description;
       jQuery('#detailsModal').modal('show');
     });
   });
+  }
+
+  productList(prod, cat) {
+    const listProd = [];
+    prod.forEach(element => {
+      if (element.category) {
+        if (element.category.name === cat.name) {
+          listProd.push(element.name);
+        }
+      }
+    });
+    return listProd;
   }
 
   updateCategory() {

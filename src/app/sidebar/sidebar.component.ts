@@ -15,7 +15,8 @@ export class SidebarComponent {
     {link: '/produits', label: 'Produits', icon: 'apps'},
     {link: '/categories', label: 'Categories', icon: 'pages'},
     {link: '/interfaces', label: 'Interfaces', icon: 'ballot'},
-    {link: '/users', label: 'Utilisateur', icon: 'ballot'}
+    {link: '/users', label: 'Utilisateur', icon: 'ballot'},
+    {link: '/marques', label: 'Marques', icon: 'apps'}
   ];
 
 }

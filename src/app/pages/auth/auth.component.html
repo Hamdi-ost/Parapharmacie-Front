@@ -27,13 +27,13 @@
           <h2 class="mb-4 text-primary">Login</h2>
           <form>
             <div class="form-group">
-              <input type="email" class="form-control" placeholder="Email" required autofocus />
+              <input [(ngModel)]="form.username" name="username" type="text" class="form-control" placeholder="Username" required autofocus />
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" placeholder="Password" required />
+              <input type="password" [(ngModel)]="form.password"  class="form-control" name="password" placeholder="Password" required />
             </div>
             <div class="form-group">
-              <button type="submit" class="btn px-4 btn-primary">Log In</button>
+              <button type="submit" class="btn px-4 btn-primary" (click)="login()">Log In</button>
             </div>
           </form>
         </div>
@@ -44,20 +44,17 @@
           <h2 class="mb-4 text-primary">Sign Up</h2>
           <form class="forms_form">
             <div class="form-group">
-              <input type="text" placeholder="Full Name" class="form-control" required />
+              <input [(ngModel)]="form.username" type="text" name="username" placeholder="Username" class="form-control" required />
             </div>
             <div class="form-group">
-              <input type="email" placeholder="Email" class="form-control" required />
+              <input [(ngModel)]="form.password" name="password" type="password" placeholder="Password" class="form-control" required />
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control" required />
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary px-4">Sign Up</button>
+              <button type="submit" class="btn btn-primary px-4" (click)="signUp()">Sign Up</button>
             </div>
           </form>
         </div>
       </div>
-    </div>
+    </div>credentials
   </div>
 </div>

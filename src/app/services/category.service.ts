@@ -2,11 +2,12 @@ import { Observable, of, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { catchError, tap, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { Category } from 'app/models/category';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
-const apiUrl = 'http://localhost:3000/api/category';
+const apiUrl = 'http://localhost:8080/api/categories';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,7 @@ export class CategoryService {
 
   private extractData(res: Response) {
     const body = res;
-    return body || { };
+    return Category.dataToDisplay(body) || { };
   }
 
   getCategories(): Observable<any> {
@@ -44,7 +45,6 @@ export class CategoryService {
   getCategory(id: string): Observable<any> {
     const url = `${apiUrl}/${id}`;
     return this.http.get(url, httpOptions).pipe(
-      map(this.extractData),
       catchError(this.handleError));
   }
 

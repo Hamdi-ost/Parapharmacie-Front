@@ -20,11 +20,11 @@
           <td *ngIf="column !== 'Action'" >{{ obj[column] }}</td>
          </ng-container>
           <td>
-            <button (click)="detailsX(obj._id)" class="btn btn-just-icon btn-round btn-light">
+            <button (click)="detailsX(obj.id)" class="btn btn-just-icon btn-round btn-light">
               <i class="material-icons">details</i></button
-            ><button (click)="editX(obj._id)" class="btn  btn-just-icon btn-round btn-light">
+            ><button (click)="editX(obj.id)" class="btn  btn-just-icon btn-round btn-light">
               <i class="material-icons">edit</i></button
-            ><button (click)="deleteX(obj._id)" class="btn  btn-just-icon btn-round btn-light">
+            ><button (click)="deleteX(obj.id)" class="btn  btn-just-icon btn-round btn-light">
               <i class="material-icons">delete</i>
             </button>
           </td>
