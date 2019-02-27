@@ -9,6 +9,7 @@ export class Marque {
             const resultat = new Marque();
             resultat.id = el.id;
             resultat.name = el.name;
+            resultats.push(resultat);
         });
         resultats.splice(0, 1);
         return resultats;

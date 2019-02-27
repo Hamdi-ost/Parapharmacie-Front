@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InterfacesComponent } from './interfaces.component';
 import { Routes, RouterModule } from '@angular/router';
+import { SliderComponent } from './slider/slider.component';
+import { ProductHomeComponent } from './product-home/product-home.component';
+import { ComponentsRoutingModule } from './interfaces-routing.module';
 
-const routes: Routes = [
-  { path: '', component: InterfacesComponent }
-];
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    ComponentsRoutingModule
   ],
-  declarations: [InterfacesComponent]
+  declarations: [SliderComponent, ProductHomeComponent]
 })
 export class InterfacesModule { }

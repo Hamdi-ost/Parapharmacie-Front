@@ -5,9 +5,11 @@ import { AuthComponent } from './auth/auth.component';
 import { PagesRoutingModule } from './pages-routing.module';
 import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { BeforeLoginService } from 'app/services/before-login.service';
+import { AfterLoginService } from 'app/services/after-login.service';
 
 const routes: Routes = [
-  { path: '', component: AuthComponent }
+  { path: '', component: AuthComponent, canActivate: [BeforeLoginService] }
 ];
 
 @NgModule({

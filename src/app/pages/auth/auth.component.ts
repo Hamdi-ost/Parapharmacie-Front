@@ -39,7 +39,8 @@ export class AuthComponent implements OnInit {
   }
 
   login() {
-    this.loginRegisterService.login(this.form);
+    this.loginRegisterService.login(this.form).subscribe(data => console.log(data)
+    );
   }
 
   signUp() {
@@ -55,9 +56,9 @@ export class AuthComponent implements OnInit {
   }
 
   handleResponse(data) {
-    this.tokenService.handle(data.access_token);
+    // this.tokenService.handle(data.access_token);
     this.authService.changeAuthStatus(true);
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('/');
   }
 
 }
