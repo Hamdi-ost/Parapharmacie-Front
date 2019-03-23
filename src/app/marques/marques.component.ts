@@ -29,9 +29,9 @@ export class MarquesComponent implements OnInit {
 
   fetchData() {
     this.marqueService.getMarques().subscribe(data => {
-      console.log(data);
       this.marques = data.reverse();
       this.columnsName = Object.keys(this.marques[0]);
+      this.columnsName.shift();
       this.columnsName.push('Action');
     });
   }
@@ -63,7 +63,7 @@ export class MarquesComponent implements OnInit {
     this.MarqueId = id;
     this.marqueService.getMarque(id).subscribe(Marque => {
       this.name = Marque.name;
-      this.description = Marque.description;
+      // this.description = Marque.description;
       jQuery('#editModal').modal('show');
     });
   }
@@ -74,7 +74,7 @@ export class MarquesComponent implements OnInit {
     this.marqueService.getMarque(id).subscribe(Marque => {
       this.products = this.productList(prod, Marque);
       this.name = Marque.name;
-      this.description = Marque.description;
+      // this.description = Marque.description;
       jQuery('#detailsModal').modal('show');
     });
   });
@@ -83,24 +83,24 @@ export class MarquesComponent implements OnInit {
   productList(prod, cat) {
     const listProd = [];
     prod.forEach(element => {
-      if (element.Marque) {
-        if (element.Marque.name === cat.name) {
+      if (element.mark) {
+        if (element.mark.name === cat.name) {
           listProd.push(element.name);
         }
       }
     });
+
     return listProd;
   }
 
   updateMarque() {
     const UpdatedMarque = {
-      name: this.name,
-      description: this.description,
+      name: this.name
+      // description: this.description,
     };
     this.marqueService
       .updateMarque(UpdatedMarque, this.MarqueId)
       .subscribe(data => {
-        console.log(data);
         jQuery('#editModal').modal('hide');
         this.fetchData();
         this._flashMessagesService.show('Marque Updated!', {
@@ -112,8 +112,8 @@ export class MarquesComponent implements OnInit {
 
   addMarque() {
     const Marque = {
-      name: this.name,
-      description: this.description,
+      name: this.name
+      // description: this.description
     };
     this.marqueService.postMarque(Marque).subscribe(data => {
       console.log(data);

@@ -9,7 +9,7 @@ import { UserModule } from 'app/users/user.module';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     DataTablesModule,
     UserModule,
     ProduitModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

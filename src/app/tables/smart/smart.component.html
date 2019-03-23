@@ -11,22 +11,52 @@
     >
       <thead>
         <tr>
-          <th *ngFor="let column of columnsName">{{column | uppercase}}</th>
+          <th *ngFor="let column of columnsName">{{ column | uppercase }}</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let obj of data">
-         <ng-container *ngFor="let column of columnsName">
-          <td *ngIf="column !== 'Action'" >{{ obj[column] }}</td>
-         </ng-container>
-          <td>
-            <button (click)="detailsX(obj.id)" class="btn btn-just-icon btn-round btn-light">
+        <tr *ngFor="let obj of data; let i=index">
+          <ng-container *ngFor="let column of columnsName">
+            <td *ngIf="column !== 'Action' && column !== 'id'">{{ obj[column] }}</td>
+          </ng-container>
+          <td *ngIf="url != '/interfaces/productsHome'">
+            <button
+              (click)="detailsX(obj.id)"
+              class="btn btn-just-icon btn-round btn-light"
+            >
               <i class="material-icons">details</i></button
-            ><button (click)="editX(obj.id)" class="btn  btn-just-icon btn-round btn-light">
+            ><button
+              (click)="editX(obj.id)"
+              class="btn  btn-just-icon btn-round btn-light"
+            >
               <i class="material-icons">edit</i></button
-            ><button (click)="deleteX(obj.id)" class="btn  btn-just-icon btn-round btn-light">
+            ><button
+              (click)="deleteX(obj.id)"
+              class="btn  btn-just-icon btn-round btn-light"
+            >
               <i class="material-icons">delete</i>
             </button>
+          </td>
+          <td *ngIf="url == '/interfaces/productsHome'">
+            <div
+              _ngcontent-c4=""
+              class="custom-control custom-checkbox d-inline-block mr-3"
+            >
+              <input
+                name=""
+                _ngcontent-c4=""
+                class="custom-control-input"
+                id={{obj.id}}
+                type="checkbox"
+                (change)="selectProduct(obj.id)"
+                [(ngModel)]="product[i]"
+              /><label
+                _ngcontent-c4=""
+                class="custom-control-label"
+                for={{obj.id}}
+                >.</label
+              >
+            </div>
           </td>
         </tr>
       </tbody>

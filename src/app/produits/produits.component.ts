@@ -4,6 +4,7 @@ import { ProduitsService } from 'app/services/produits.service';
 import { CategoryService } from 'app/services/category.service';
 import { Product } from 'app/models/products';
 import { MarqueService } from 'app/services/marque.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 declare var jQuery: any;
 
 @Component({
@@ -23,19 +24,25 @@ export class ProduitsComponent implements OnInit {
   columnsName;
   categories;
   categoryId;
+  categoryUpdateName;
   categoryName;
   pourcentage;
   marqueId;
   inPromo = {selected : false};
   marques;
   disabled;
+  marqueName;
+  path;
+  inPromotion;
 
+  registerForm: FormGroup;
+  submitted = false;
   constructor(
     private productService: ProduitsService,
     private categoryService: CategoryService,
     private _flashMessagesService: FlashMessagesService,
     private marqueService: MarqueService
-  ) {}
+    ) {}
 
   fetchData() {
     this.categoryService.getCategories().subscribe(cat => {
@@ -44,9 +51,21 @@ export class ProduitsComponent implements OnInit {
           this.marques = marq;
           this.categories = cat;
           this.products = data.reverse();
-          this.columnsName = Object.keys(this.products[0]);
-          this.columnsName.pop();
-          this.columnsName.push('Action');
+          // Pour extraire le nom de category mais non l'objet
+          this.products.forEach(element => {
+            if (element.category) {
+              element.category = element.category.name;
+            }
+            if (element.mark) {
+              element.mark = element.mark.name;
+            }
+          });
+          if (this.products.length > 0) {
+            this.columnsName = Object.keys(this.products[0]);
+            // Delete ID column
+            this.columnsName.shift();
+            this.columnsName.push('Action');
+          }
         });
       });
     });
@@ -59,6 +78,7 @@ export class ProduitsComponent implements OnInit {
       pageLength: 2
     };
   }
+
 
   deleteProduct(id) {
     this.productService.deleteProduct(id).subscribe(
@@ -76,11 +96,17 @@ export class ProduitsComponent implements OnInit {
   }
 
   getProduct(id) {
+
     this.productId = id;
     this.productService.getProduct(id).subscribe(product => {
       this.name = product.name;
-      this.description = product.description;
       this.cost = product.cost;
+      this.categoryUpdateName = product.category.name;
+      this.description = product.longDescription;
+      this.path = product.path;
+      this.marqueName = product.mark.name;
+      this.inPromotion = product.inPromotion;
+      this.pourcentage = product.promotionPourcentage;
       jQuery('#editModal').modal('show');
     });
   }
@@ -93,23 +119,37 @@ export class ProduitsComponent implements OnInit {
       this.description = product.longDescription;
       this.cost = product.cost;
       this.picturePath = product.picturePath;
+      this.marqueName = product.mark.name;
     });
     // console.log(this.productService.getCategoryName(cat));
     jQuery('#detailsModal').modal('show');
   }
 
   updateProduct() {
+    this.categoryService.getCategory(this.categoryId).subscribe(cat => {
+      this.marqueService.getMarque(this.marqueId).subscribe(marq => {
+    let promo; let pourc;
+    if (this.inPromo.selected) {
+      promo = this.inPromo.selected;
+      pourc = this.pourcentage;
+    } else {
+      promo = this.inPromo.selected;
+      pourc = 0;
+    }
     const UpdatedProduct = {
       name: this.name,
       cost: this.cost,
-      category: this.categoryId,
-      description: this.description,
-      picturePath: '/path'
+      inPromotion: promo,
+      promotionPourcentage: pourc,
+      category: cat,
+      longDescription: this.description,
+      picturePath: this.path,
+      mark: marq
     };
+    console.log(UpdatedProduct);
     this.productService
       .updateProduct(UpdatedProduct, this.productId)
       .subscribe(data => {
-        console.log(data);
         jQuery('#editModal').modal('hide');
         this.fetchData();
         this._flashMessagesService.show('Produit Updated!', {
@@ -117,11 +157,17 @@ export class ProduitsComponent implements OnInit {
           timeout: 2500
         });
       });
+    });
+  });
+  }
+
+  onFileSelected(event) {
+    this.path = event.target.files[0].name;
   }
 
   addProduct() {
     this.categoryService.getCategory(this.categoryId).subscribe(cat => {
-      // this.marqueService.getMarque(this.marqueId).subscribe(marq => {
+       this.marqueService.getMarque(this.marqueId).subscribe(marq => {
         // tslint:disable-next-line:prefer-const
         let promo; let pourc;
         if (this.inPromo.selected) {
@@ -131,7 +177,6 @@ export class ProduitsComponent implements OnInit {
           promo = this.inPromo.selected;
           pourc = 0;
         }
-        console.log(promo);
         const product = {
           name: this.name,
           cost: this.cost,
@@ -139,10 +184,9 @@ export class ProduitsComponent implements OnInit {
           promotionPourcentage: pourc,
           category: cat,
           longDescription: this.description,
-          picturePath: '/path',
-          // mark: marq
+          picturePath: this.path,
+          mark: marq
         };
-        console.log(product);
         this.productService.postProduct(product).subscribe(data => {
           if (data.msg === 'existe') {
             this._flashMessagesService.show('Produit existe déja!', {
@@ -155,10 +199,11 @@ export class ProduitsComponent implements OnInit {
               timeout: 2500
             });
           }
+          this.name = ''; this.cost = ''; promo = false; this.description = ''; this.path = '';
           jQuery('#exampleModal').modal('hide');
           this.fetchData();
         });
       });
-    // });
+    });
   }
 }

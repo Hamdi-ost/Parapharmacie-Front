@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
-import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
-import { AfterLoginService } from 'app/services/after-login.service';
-import { BeforeLoginService } from 'app/services/before-login.service';
-import { AuthComponent } from 'app/pages/auth/auth.component';
+
 
 const routes: Routes = [
   {

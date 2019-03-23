@@ -30,6 +30,7 @@ export class CategoriesComponent implements OnInit {
     this.categoryService.getCategories().subscribe(data => {
       this.categories = data.reverse();
       this.columnsName = Object.keys(this.categories[0]);
+      this.columnsName.shift();
       this.columnsName.push('Action');
     });
   }
@@ -61,7 +62,7 @@ export class CategoriesComponent implements OnInit {
     this.categoryId = id;
     this.categoryService.getCategory(id).subscribe(Category => {
       this.name = Category.name;
-      this.description = Category.description;
+      this.description = Category.shortDescription;
       jQuery('#editModal').modal('show');
     });
   }
@@ -72,7 +73,7 @@ export class CategoriesComponent implements OnInit {
     this.categoryService.getCategory(id).subscribe(category => {
       this.products = this.productList(prod, category);
       this.name = category.name;
-      this.description = category.description;
+      this.description = category.shortDescription;
       jQuery('#detailsModal').modal('show');
     });
   });
@@ -93,12 +94,12 @@ export class CategoriesComponent implements OnInit {
   updateCategory() {
     const UpdatedCategory = {
       name: this.name,
-      description: this.description,
+      shortDescription: this.description,
     };
+    console.log(UpdatedCategory);
     this.categoryService
       .updateCategory(UpdatedCategory, this.categoryId)
       .subscribe(data => {
-        console.log(data);
         jQuery('#editModal').modal('hide');
         this.fetchData();
         this._flashMessagesService.show('Category Updated!', {
@@ -111,7 +112,7 @@ export class CategoriesComponent implements OnInit {
   addCategory() {
     const Category = {
       name: this.name,
-      description: this.description,
+      shortDescription: this.description,
     };
     this.categoryService.postCategory(Category).subscribe(data => {
       console.log(data);

@@ -18,7 +18,6 @@ export class SidebarComponent {
       {link: '/interfaces/productsHome', label: 'Produits', icon: 'P'},
       {link: '/interfaces/sliders', label: 'Sliders', icon: 'S'}
     ]},
-    {link: '/users', label: 'Utilisateur', icon: 'ballot'},
     {link: '/marques', label: 'Marques', icon: 'apps'}
   ];
 }

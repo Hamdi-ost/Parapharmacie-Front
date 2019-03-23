@@ -2,10 +2,6 @@ import {
   Component,
   OnInit,
   Input,
-  ViewChild,
-  AfterViewInit,
-  Renderer2,
-  OnDestroy,
   Output,
   EventEmitter
 } from '@angular/core';
@@ -20,14 +16,20 @@ export class SmartComponent implements OnInit {
   @Output() delete = new EventEmitter();
   @Output() details = new EventEmitter();
   @Output() edit = new EventEmitter();
+  @Output() checkbox = new EventEmitter();
   @Input() titre;
   @Input() dtOptions: DataTables.Settings = {};
   @Input() dtTrigger = new Subject();
   @Input() data;
   @Input() columnsName;
-  constructor() {}
+  product = [];
+  url;
+  constructor() {
+    this.url = window.location.pathname;
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   deleteX(id) {
     this.delete.emit(id);
@@ -39,5 +41,9 @@ export class SmartComponent implements OnInit {
 
   detailsX(id) {
     this.details.emit(id);
+  }
+
+  selectProduct(ids) {
+    this.checkbox.emit(this.product);
   }
 }

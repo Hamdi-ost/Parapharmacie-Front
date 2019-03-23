@@ -10,13 +10,16 @@ import { TasksComponent } from './tasks/tasks.component';
 import { FormsModule } from '@angular/forms';
 import { StatsComponent } from './stats/stats.component';
 import { FlashMessagesModule } from 'angular2-flash-messages';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   imports: [
     FlashMessagesModule.forRoot(),
     CommonModule,
     FormsModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [
     NavbarComponent,

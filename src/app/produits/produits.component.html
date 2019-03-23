@@ -49,9 +49,9 @@
           <div _ngcontent-c9="" class="card">
             <div _ngcontent-c9="" class="card-body">
               <form
-                _ngcontent-c9=""
-                class="mb-xl-4 ng-untouched ng-pristine ng-valid"
-                novalidate=""
+              _ngcontent-c9=""
+              class="mb-xl-4 ng-untouched ng-pristine ng-valid"
+              novalidate=""
               >
                 <div _ngcontent-c9="" class="form-group row">
                   <label _ngcontent-c9="" class="col-sm-3 col-form-label"
@@ -65,7 +65,8 @@
                       class="form-control"
                       placeholder="Enter name"
                       type="text"
-                    />
+                      required
+                    />                 
                   </div>
                 </div>
                 <div _ngcontent-c9="" class="form-group row">
@@ -80,6 +81,7 @@
                       class="form-control"
                       placeholder="Enter prix"
                       type="number"
+                      required
                     />
                   </div>
                 </div>
@@ -125,6 +127,7 @@
                       _ngcontent-c17=""
                       class="custom-select mb-3"
                       name="categoryId"
+                      required
                       ><option
                         *ngFor="let category of categories"
                         _ngcontent-c17=""
@@ -145,6 +148,7 @@
                       _ngcontent-c17=""
                       class="custom-select mb-3"
                       name="marqueId"
+                      required
                       ><option
                         *ngFor="let marque of marques"
                         _ngcontent-c17=""
@@ -161,6 +165,7 @@
                   >
                   <div _ngcontent-c9="" class="col-sm-9">
                     <textarea
+                      required
                       name="description"
                       [(ngModel)]="description"
                       _ngcontent-c9=""
@@ -175,6 +180,7 @@
                     _ngcontent-c16=""
                     class="custom-file-input"
                     type="file"
+                    (change) = "onFileSelected($event)"
                   /><label _ngcontent-c16="" class="custom-file-label"
                     >Choisir photo</label
                   >
@@ -240,6 +246,7 @@
                       class="form-control"
                       placeholder="Enter name"
                       type="text"
+                      required
                     />
                   </div>
                 </div>
@@ -249,13 +256,87 @@
                   >
                   <div _ngcontent-c9="" class="col-sm-9">
                     <input
-                      name="cost"
+                      name="prix"
                       [(ngModel)]="cost"
                       _ngcontent-c9=""
                       class="form-control"
-                      placeholder="Enter cost"
+                      placeholder="Enter prix"
+                      type="number"
+                      required
+                    />
+                  </div>
+                </div>
+                <div _ngcontent-c9="" class="form-group row">
+                  <label _ngcontent-c9="" class="col-sm-3 col-form-label"
+                    >Promo</label
+                  >
+                  <div
+                    _ngcontent-c4=""
+                    class="custom-control custom-checkbox d-inline-block mr-3"
+                  >
+                    <input
+                      name="inPromo" 
+                      [(ngModel)]="inPromo.selected"
+                      _ngcontent-c4=""
+                      class="custom-control-input"
+                      id="customCheck9"
+                      type="checkbox"
+                    /><label
+                      _ngcontent-c4=""
+                      class="custom-control-label"
+                      for="customCheck9"
+                      >Oui</label
+                    >
+                    <input
+                     disabled = {{!inPromo.selected}}
+                      name="pourcentage"
+                      [(ngModel)]="pourcentage"
+                      _ngcontent-c9=""
+                      class="form-control"
+                      placeholder="pourcentage"
                       type="number"
                     />
+                  </div>
+                </div>
+
+                <div _ngcontent-c9="" class="form-group row">
+                  <label _ngcontent-c9="" class="col-sm-3 col-form-label"
+                    >Category</label
+                  >
+                  <div _ngcontent-c9="" class="col-sm-9">
+                    <select
+                      [(ngModel)]="categoryId"
+                      _ngcontent-c17=""
+                      class="custom-select mb-3"
+                      name="categoryId"
+                      ><option
+                        *ngFor="let category of categories"
+                        _ngcontent-c17=""
+                        selected=""
+                        value="{{ category.id }}"
+                        >{{ category.name }}</option
+                      ></select
+                    >
+                  </div>
+                </div>
+                <div _ngcontent-c9="" class="form-group row">
+                  <label _ngcontent-c9="" class="col-sm-3 col-form-label"
+                    >Marque</label
+                  >
+                  <div _ngcontent-c9="" class="col-sm-9">
+                    <select
+                      [(ngModel)]="marqueId"
+                      _ngcontent-c17=""
+                      class="custom-select mb-3"
+                      name="marqueId"
+                      ><option
+                        *ngFor="let marque of marques"
+                        _ngcontent-c17=""
+                        selected=""
+                        value="{{ marque.id }}"
+                        >{{ marque.name }}</option
+                      ></select
+                    >
                   </div>
                 </div>
                 <div _ngcontent-c9="" class="form-group row">
@@ -278,6 +359,7 @@
                     _ngcontent-c16=""
                     class="custom-file-input"
                     type="file"
+                    (change) = "onFileSelected($event)"
                   /><label _ngcontent-c16="" class="custom-file-label"
                     >Choisir photo</label
                   >
@@ -325,8 +407,6 @@
         <div _ngcontent-c10="" class="card">
           <div _ngcontent-c10="" class="card-body">
             <dl _ngcontent-c10="" class="row">
-              <dt _ngcontent-c10="" class="col-sm-3">ID</dt>
-              <dd _ngcontent-c10="" class="col-sm-9">{{ productId }}</dd>
               <dt _ngcontent-c10="" class="col-sm-3">Nom</dt>
               <dd _ngcontent-c10="" class="col-sm-9">{{ name }}</dd>
               <dt _ngcontent-c10="" class="col-sm-3">Prix</dt>
@@ -335,6 +415,8 @@
               <dd _ngcontent-c10="" class="col-sm-9">{{ picturePath }}</dd>
               <dt _ngcontent-c10="" class="col-sm-3">Category</dt>
               <dd _ngcontent-c10="" class="col-sm-9">{{ categoryName }}</dd>
+              <dt _ngcontent-c10="" class="col-sm-3">Marque</dt>
+              <dd _ngcontent-c10="" class="col-sm-9">{{ marqueName }}</dd>
               <dt _ngcontent-c10="" class="col-sm-3">Description</dt>
               <dd _ngcontent-c10="" class="col-sm-9">{{ description }}</dd>
             </dl>
