@@ -146,7 +146,6 @@ export class ProduitsComponent implements OnInit {
       picturePath: this.path,
       mark: marq
     };
-    console.log(UpdatedProduct);
     this.productService
       .updateProduct(UpdatedProduct, this.productId)
       .subscribe(data => {

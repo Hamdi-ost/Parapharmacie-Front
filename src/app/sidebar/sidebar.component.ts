@@ -11,7 +11,7 @@ export class SidebarComponent {
   constructor(public cmnSrv: CommonService) {  }
 
   sidebarItems = [
-    {link: '/', label: 'Dashboard', icon: 'dashboard'},
+    {link: '/dashboard', label: 'Dashboard', icon: 'dashboard'},
     {link: '/produits', label: 'Produits', icon: 'apps'},
     {link: '/categories', label: 'Categories', icon: 'pages'},
     {label: 'Interfaces', icon: 'ballot', subItem: [

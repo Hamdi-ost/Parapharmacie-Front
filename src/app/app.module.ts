@@ -7,14 +7,12 @@ import { DataTablesModule } from 'angular-datatables';
 import { ProduitModule } from 'app/produits/produit.module';
 import { UserModule } from 'app/users/user.module';
 import { HttpClientModule } from '@angular/common/http';
-import { Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
-    AppComponent
-    ],
+    AppComponent    ],
   imports: [
     HttpClientModule,
     BrowserModule,

@@ -7,7 +7,8 @@ import { Product } from 'app/models/products';
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
 };
-const apiUrl = 'http://localhost:8080/api/interface.products';
+const apiUrl1 = 'http://localhost:8080/api/interface.products';
+const apiUrl2 = 'http://localhost:8080/api/interface.images';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,13 @@ export class HomeProductsService {
   }
 
   postProducts(data): Observable<any> {
-    return this.http.post(apiUrl, data, httpOptions).pipe(
+    return this.http.post(apiUrl1, data, httpOptions).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  postSliders(data): Observable<any> {
+    return this.http.post(apiUrl2, data, httpOptions).pipe(
       catchError(this.handleError)
     );
   }

@@ -9,7 +9,7 @@ import { BeforeLoginService } from 'app/services/before-login.service';
 import { AfterLoginService } from 'app/services/after-login.service';
 
 const routes: Routes = [
-  { path: '', component: AuthComponent, canActivate: [BeforeLoginService] }
+  { path: '', component: NotFoundComponent}
 ];
 
 @NgModule({

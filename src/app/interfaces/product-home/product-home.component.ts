@@ -4,6 +4,7 @@ import { ProduitsService } from 'app/services/produits.service';
 import { CategoryService } from 'app/services/category.service';
 import { MarqueService } from 'app/services/marque.service';
 import { HomeProductsService } from 'app/services/home-products.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-product-home',
@@ -35,7 +36,8 @@ export class ProductHomeComponent implements OnInit {
     private categoryService: CategoryService,
     private _flashMessagesService: FlashMessagesService,
     private marqueService: MarqueService,
-    private homeProducts: HomeProductsService
+    private homeProducts: HomeProductsService,
+    private router: Router
   ) {}
 
   fetchData() {
@@ -99,19 +101,21 @@ export class ProductHomeComponent implements OnInit {
       });
 
       product.forEach(element => {
-        console.log(element);
-        this.homeProducts.postProducts(element).subscribe(data => {
-          console.log(data);
+        const homeProductElement = {
+          product: element
+        };
+        this.homeProducts.postProducts(homeProductElement).subscribe(data => {
           if (data.msg === 'existe') {
-            this._flashMessagesService.show('Produit existe déja!', {
+            this._flashMessagesService.show('Error!', {
               cssClass: 'alert-danger',
               timeout: 2500
             });
           } else {
-            this._flashMessagesService.show('Produit créé!', {
+            this._flashMessagesService.show('Produits choisi!', {
               cssClass: 'alert-success',
               timeout: 2500
             });
+            this.router.navigate(['/produits']);
           }
         });
       });

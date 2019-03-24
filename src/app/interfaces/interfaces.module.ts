@@ -4,13 +4,14 @@ import { SliderComponent } from './slider/slider.component';
 import { ProductHomeComponent } from './product-home/product-home.component';
 import { ComponentsRoutingModule } from './interfaces-routing.module';
 import { SharedModuleModule } from 'app/shared-module/shared-module.module';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     ComponentsRoutingModule,
-    SharedModuleModule
+    SharedModuleModule,
+    FormsModule
   ],
   declarations: [SliderComponent, ProductHomeComponent]
 })

@@ -1,3 +1,33 @@
-<p>
-  slider works!
-</p>
+<h6 _ngcontent-c25="" class="mt-3">Slider 1</h6>
+<div _ngcontent-c25="" class="custom-file mb-3">
+  <img [src]="url1" style="width: auto; height: 500px"> <br/>
+  <input _ngcontent-c25="" class="custom-file-input" type="file" (change)="onSelectFile1($event)"/><label
+    _ngcontent-c25=""
+    class="custom-file-label"
+    >Choose file</label
+  >
+</div>
+
+
+
+<h6 _ngcontent-c25="" class="mt-3">Slider 2</h6>
+<div _ngcontent-c25="" class="custom-file mb-3">
+  <img [src]="url2" style="width: auto; height: 500px" > <br/>
+  <input _ngcontent-c25="" class="custom-file-input" type="file" (change)="onSelectFile2($event)"/><label
+    _ngcontent-c25=""
+    class="custom-file-label"
+    >Choose file</label
+  >
+</div>
+
+<div style="padding-bottom: 3rem">
+    <button
+      style="float:right"
+      _ngcontent-c21=""
+      class="btn w-25 m-3 btn-primary"
+      type="button"
+      (click)="valider()"
+    >
+      Valider
+    </button>
+  </div>
