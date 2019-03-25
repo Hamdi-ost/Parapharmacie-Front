@@ -99,26 +99,29 @@ export class ProductHomeComponent implements OnInit {
         });
         product.push(prodToShow);
       });
+       const homeProductElement = {
+        'product1' : { 'product': { 'id': product[0].id} },
+        'product2' : { 'product': { 'id': product[1].id} },
+        'product3' : { 'product': { 'id': product[2].id} }
+       };
 
-      product.forEach(element => {
-        const homeProductElement = {
-          product: element
-        };
-        this.homeProducts.postProducts(homeProductElement).subscribe(data => {
-          if (data.msg === 'existe') {
-            this._flashMessagesService.show('Error!', {
-              cssClass: 'alert-danger',
-              timeout: 2500
-            });
-          } else {
-            this._flashMessagesService.show('Produits choisi!', {
-              cssClass: 'alert-success',
-              timeout: 2500
-            });
-            this.router.navigate(['/produits']);
-          }
-        });
-      });
+      console.log(homeProductElement);
+
+         this.homeProducts.postProducts(homeProductElement).subscribe(data => {
+           if (data.msg === 'existe') {
+             this._flashMessagesService.show('Error!', {
+               cssClass: 'alert-danger',
+               timeout: 2500
+             });
+           } else {
+             this._flashMessagesService.show('Produits choisi!', {
+               cssClass: 'alert-success',
+               timeout: 2500
+             });
+             this.router.navigate(['/produits']);
+           }
+         });
+
     });
   }
 }
