@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModuleModule } from 'app/shared-module/shared-module.module';
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home.component';
+import { CalendarComponent } from '../calendar/calendar.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FormsModule
   ],
-  declarations: [HomeComponent]
+  declarations: [HomeComponent, CalendarComponent]
 })
 export class HomeModule { }

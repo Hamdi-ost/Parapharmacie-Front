@@ -14,7 +14,7 @@ import {Router} from '@angular/router';
 export class ProductHomeComponent implements OnInit {
   dtOptions: any;
   products: any;
-  titre = 'Liste des Produits';
+  titre = 'Sélectionné 3 produits pour les afficher à l\'accueil';
   description;
   cost;
   name;

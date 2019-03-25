@@ -197,8 +197,8 @@ export class ProduitsComponent implements OnInit {
               cssClass: 'alert-success',
               timeout: 2500
             });
+            this.name = ''; this.cost = ''; promo = false; this.description = ''; this.path = '';
           }
-          this.name = ''; this.cost = ''; promo = false; this.description = ''; this.path = '';
           jQuery('#exampleModal').modal('hide');
           this.fetchData();
         });
