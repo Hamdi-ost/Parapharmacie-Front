@@ -5,6 +5,7 @@ import { CategoryService } from 'app/services/category.service';
 import { Product } from 'app/models/products';
 import { MarqueService } from 'app/services/marque.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ConfirmationDialogService } from 'app/confirmation-dialoge/confirmation-dialog.service';
 declare var jQuery: any;
 
 @Component({
@@ -28,7 +29,7 @@ export class ProduitsComponent implements OnInit {
   categoryName;
   pourcentage;
   marqueId;
-  inPromo = {selected : false};
+  inPromo = { selected: false };
   marques;
   disabled;
   marqueName;
@@ -41,8 +42,9 @@ export class ProduitsComponent implements OnInit {
     private productService: ProduitsService,
     private categoryService: CategoryService,
     private _flashMessagesService: FlashMessagesService,
-    private marqueService: MarqueService
-    ) {}
+    private marqueService: MarqueService,
+    private confirmationDialogService: ConfirmationDialogService
+  ) {}
 
   fetchData() {
     this.categoryService.getCategories().subscribe(cat => {
@@ -55,9 +57,13 @@ export class ProduitsComponent implements OnInit {
           this.products.forEach(element => {
             if (element.category) {
               element.category = element.category.name;
+            } else {
+              element.category = 'null';
             }
             if (element.mark) {
               element.mark = element.mark.name;
+            } else {
+              element.mark = 'null';
             }
           });
           if (this.products.length > 0) {
@@ -79,24 +85,35 @@ export class ProduitsComponent implements OnInit {
     };
   }
 
-
   deleteProduct(id) {
-    this.productService.deleteProduct(id).subscribe(
-      data => {
-        this._flashMessagesService.show('Produit supprimé!', {
-          cssClass: 'alert-success',
-          timeout: 2500
-        });
-      },
-      () => {},
-      () => {
-        this.fetchData();
+    this.confirmationDialogService
+    .confirm('Confirmer s\'il vous plait..', ' Vous etes sur de supprimer ce produit?')
+    .then(confirmed => {
+      console.log('User confirmed:', confirmed);
+      if (confirmed) {
+        this.productService.deleteProduct(id).subscribe(
+          data => {
+            this._flashMessagesService.show('Produit supprimé!', {
+              cssClass: 'alert-success',
+              timeout: 2500
+            });
+          },
+          () => {},
+          () => {
+            this.fetchData();
+          }
+        );
       }
+    })
+    .catch(() =>
+      console.log(
+        'User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'
+      )
     );
+
   }
 
   getProduct(id) {
-
     this.productId = id;
     this.productService.getProduct(id).subscribe(product => {
       this.name = product.name;
@@ -128,36 +145,37 @@ export class ProduitsComponent implements OnInit {
   updateProduct() {
     this.categoryService.getCategory(this.categoryId).subscribe(cat => {
       this.marqueService.getMarque(this.marqueId).subscribe(marq => {
-    let promo; let pourc;
-    if (this.inPromo.selected) {
-      promo = this.inPromo.selected;
-      pourc = this.pourcentage;
-    } else {
-      promo = this.inPromo.selected;
-      pourc = 0;
-    }
-    const UpdatedProduct = {
-      name: this.name,
-      cost: this.cost,
-      inPromotion: promo,
-      promotionPourcentage: pourc,
-      category: cat,
-      longDescription: this.description,
-      picturePath: this.path,
-      mark: marq
-    };
-    this.productService
-      .updateProduct(UpdatedProduct, this.productId)
-      .subscribe(data => {
-        jQuery('#editModal').modal('hide');
-        this.fetchData();
-        this._flashMessagesService.show('Produit Updated!', {
-          cssClass: 'alert-success',
-          timeout: 2500
-        });
+        let promo;
+        let pourc;
+        if (this.inPromo.selected) {
+          promo = this.inPromo.selected;
+          pourc = this.pourcentage;
+        } else {
+          promo = this.inPromo.selected;
+          pourc = 0;
+        }
+        const UpdatedProduct = {
+          name: this.name,
+          cost: this.cost,
+          inPromotion: promo,
+          promotionPourcentage: pourc,
+          category: cat,
+          longDescription: this.description,
+          picturePath: this.path,
+          mark: marq
+        };
+        this.productService
+          .updateProduct(UpdatedProduct, this.productId)
+          .subscribe(data => {
+            jQuery('#editModal').modal('hide');
+            this.fetchData();
+            this._flashMessagesService.show('Produit Updated!', {
+              cssClass: 'alert-success',
+              timeout: 2500
+            });
+          });
       });
     });
-  });
   }
 
   onFileSelected(event) {
@@ -166,9 +184,10 @@ export class ProduitsComponent implements OnInit {
 
   addProduct() {
     this.categoryService.getCategory(this.categoryId).subscribe(cat => {
-       this.marqueService.getMarque(this.marqueId).subscribe(marq => {
+      this.marqueService.getMarque(this.marqueId).subscribe(marq => {
         // tslint:disable-next-line:prefer-const
-        let promo; let pourc;
+        let promo;
+        let pourc;
         if (this.inPromo.selected) {
           promo = this.inPromo.selected;
           pourc = this.pourcentage;
@@ -197,7 +216,12 @@ export class ProduitsComponent implements OnInit {
               cssClass: 'alert-success',
               timeout: 2500
             });
-            this.name = ''; this.cost = ''; promo = false; this.description = ''; this.path = '';
+            this.name = '';
+            this.cost = '';
+            this.marqueName = '';
+            promo = false;
+            this.description = '';
+            this.path = '';
           }
           jQuery('#exampleModal').modal('hide');
           this.fetchData();

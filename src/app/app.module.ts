@@ -9,10 +9,13 @@ import { UserModule } from 'app/users/user.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ConfirmationDialogeComponent } from './confirmation-dialoge/confirmation-dialoge.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
-    AppComponent    ],
+    AppComponent
+      ],
   imports: [
     HttpClientModule,
     BrowserModule,
@@ -22,7 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     UserModule,
     ProduitModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

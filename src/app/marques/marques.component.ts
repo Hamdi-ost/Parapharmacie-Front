@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FlashMessagesService } from 'angular2-flash-messages';
 import { ProduitsService } from 'app/services/produits.service';
 import { MarqueService } from 'app/services/marque.service';
+import { ConfirmationDialogService } from 'app/confirmation-dialoge/confirmation-dialog.service';
 declare var jQuery: any;
 
 @Component({
@@ -24,7 +25,8 @@ export class MarquesComponent implements OnInit {
     // tslint:disable-next-line:no-shadowed-variable
     private marqueService: MarqueService,
     private _flashMessagesService: FlashMessagesService,
-    private productService: ProduitsService
+    private productService: ProduitsService,
+    private confirmationDialogService: ConfirmationDialogService
   ) {}
 
   fetchData() {
@@ -45,17 +47,29 @@ export class MarquesComponent implements OnInit {
   }
 
   deleteMarque(id) {
-    this.marqueService.deleteMarque(id).subscribe(
-      data => {
-        this._flashMessagesService.show('Marque supprimé!', {
-          cssClass: 'alert-success',
-          timeout: 2500
-        });
-      },
-      () => {},
-      () => {
-        this.fetchData();
+    this.confirmationDialogService
+    .confirm('Confirmer s\'il vous plait..', ' Vous etes sur de supprimer cette marque?')
+    .then(confirmed => {
+      console.log('User confirmed:', confirmed);
+      if (confirmed) {
+        this.marqueService.deleteMarque(id).subscribe(
+          data => {
+            this._flashMessagesService.show('Marque supprimé!', {
+              cssClass: 'alert-success',
+              timeout: 2500
+            });
+          },
+          () => {},
+          () => {
+            this.fetchData();
+          }
+        );
       }
+    })
+    .catch(() =>
+      console.log(
+        'User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'
+      )
     );
   }
 
@@ -127,6 +141,7 @@ export class MarquesComponent implements OnInit {
           cssClass: 'alert-success',
           timeout: 2500
         });
+        this.name = '';
       }
       jQuery('#exampleModal').modal('hide');
       this.fetchData();

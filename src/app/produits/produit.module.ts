@@ -5,6 +5,7 @@ import { ProduitsComponent } from './produits.component';
 import { SharedModuleModule } from 'app/shared-module/shared-module.module';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ConfirmationDialogeComponent } from '../confirmation-dialoge/confirmation-dialoge.component';
 
 const routes: Routes = [
   { path: '', component: ProduitsComponent }
@@ -18,6 +19,7 @@ const routes: Routes = [
     SharedModuleModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ProduitsComponent]
+  declarations: [ProduitsComponent, ConfirmationDialogeComponent],
+  entryComponents: [ConfirmationDialogeComponent],
 })
 export class ProduitModule { }
